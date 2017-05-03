@@ -11,6 +11,7 @@ class ProductsController extends Controller
 {
 
     private $repository;
+    private $categoryRepository;
 
     public function __construct(ProductRepository $repository, CategoryRepository $categoryRepository)
     {
@@ -28,10 +29,12 @@ class ProductsController extends Controller
 
 
     }
+
     public function create()
     {
 
-        return view('admin.products.create');
+        $categories = $this->categoryRepository->lists('name', 'id');
+        return view('admin.products.create', compact('categories'));
 
     }
 
@@ -47,20 +50,26 @@ class ProductsController extends Controller
     public function edit($id)
     {
         $product = $this->repository->find($id);
-        $categories = $this->categoryRepository->all(['name','id']);
+        $categories = $this->categoryRepository->lists('name', 'id');
 
-        return view('admin.products.edit',compact('product','categories'));
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
-    public function update(AdminCategoryRequest $request, $id )
+    public function update(AdminCategoryRequest $request, $id)
     {
         $data = $request->all();
         $this->repository->update($data, $id);
 
-        return redirect()->route('admin.categories.index');
+        return redirect()->route('admin.products.index');
 
     }
 
 
+    public function destroy($id)
+    {
+        $this->repository->delete($id);
 
+        return redirect()->route('admin.products.index');
+
+    }
 };
