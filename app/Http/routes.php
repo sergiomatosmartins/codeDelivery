@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix'=>'admin', 'as'=> 'admin.'], function() {
+Route::group(['prefix'=>'admin', 'middleware'=>'auth.checkrole', 'as'=> 'admin.'], function() {
 
 
     Route::get('categories', ['as' => 'categories.index', 'uses' => 'CategoriesController@index']);
@@ -23,6 +23,12 @@ Route::group(['prefix'=>'admin', 'as'=> 'admin.'], function() {
     Route::get('categories/edit/{id}', ['as' => 'categories.edit', 'uses' => 'CategoriesController@edit']);
     Route::post('categories/update/{id}', ['as' => 'categories.update', 'uses' => 'CategoriesController@update']);
     Route::post('categories/store', ['as' => 'categories.store', 'uses' => 'CategoriesController@store']);
+
+    Route::get('clients', ['as' => 'clients.index', 'uses' => 'ClientsController@index']);
+    Route::get('clients/create', ['as' => 'clients.create', 'uses' => 'ClientsController@create']);
+    Route::get('clients/edit/{id}', ['as' => 'clients.edit', 'uses' => 'ClientsController@edit']);
+    Route::post('clients/update/{id}', ['as' => 'clients.update', 'uses' => 'ClientsController@update']);
+    Route::post('clients/store', ['as' => 'clients.store', 'uses' => 'ClientsController@store']);
 
 
     Route::get('products', ['as' => 'products.index', 'uses' => 'ProductsController@index']);
