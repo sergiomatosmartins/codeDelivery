@@ -19,7 +19,7 @@
                 @foreach($clients as $client)
                     <tr>
                         <td>{{ $client->id }}</td>
-                        <td>{{ $client->name }}</td>
+                        <td>{{ $client->user->name }}</td>
                         <td>
                             <a href="{{route('admin.clients.edit',['id'=>$client->id])}}" class="btn btn-default btn-small"
                             > Editar </a>
