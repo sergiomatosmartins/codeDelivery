@@ -39,15 +39,8 @@ class ClientService
     public function create(array $data)
     {
         $data['user']['password'] = bcrypt(123456);
-
         $user =  $this->userRepository->create($data['user']);
-
-
-
         $data['user_id'] = $user->id;
-
-        //dd($data['user_id']);
-
         $this->clientRepository->create($data);
 
 
